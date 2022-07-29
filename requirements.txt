@@ -1,0 +1,7 @@
+torch
+torchvision
+pillow
+numpy
+matplotlib
+tqdm
+huggingface-hub
