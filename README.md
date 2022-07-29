@@ -26,7 +26,7 @@ device = torch.device('cuda:0')
 
 # create model
 model = get_watermarks_detection_model(
-    'resnext101_32x8d-large',
+    'resnext101_32x8d-large', # or 'resnext50_32x4d-small'
     device=device,
     cache_dir='weights/'
 )
@@ -57,7 +57,7 @@ device = torch.device('cuda:0')
 
 # create model
 model = get_watermarks_detection_model(
-    'resnext101_32x8d-large',
+    'resnext101_32x8d-large', # or 'resnext50_32x4d-small'
     device=device,
     cache_dir='weights/'
 )
