@@ -5,3 +5,4 @@ numpy
 matplotlib
 tqdm
 huggingface-hub
+opencv-python
