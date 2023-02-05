@@ -2,10 +2,10 @@
 
 - [Installation](#installation)
 - [Basic usage](#basic-usage)
-- Validation dataset
-- Training and train dataset
-  - training dataset
-  - training a model
+- [Test dataset](#test-dataset)
+- [Training a model and train dataset](#training-a-model-and-train-dataset)
+  - [Train dataset](#train-dataset)
+  - [Training a model](#training-a-model)
 
 ## Installation
 
@@ -56,11 +56,27 @@ for result in results:
     print('watermarked' if result else 'clean')
 ```
 
-## Validation dataset
+## Test dataset
 
+Download test dataset from [huggingface](https://huggingface.co/datasets/boomb0om/watermarks-validation) and put it into `dataset/` folder. Then run evaluation code in [this jupyter](https://github.com/boomb0om/watermark-detection/blob/main/jupyters/evaluate_model.ipynb).
+
+Test dataset is consists of 60 clean images and 62 watermarked images. Model accuracy for this dataset is shown below:
+
+| **Model name** | **Accuracy** |
+|---|---|
+| convnext-tiny | 93,44% |
+| resnext101_32x8d-large | 84,42% |
+| [ARKseal model](https://github.com/ARKseal/watermark-detection) | 77,86% |
+| resnext50_32x4d-small | 76,22% |
 
 ## Training and train dataset
 
-### training dataset
+### Training dataset
 
-### training a model
+Synthetic training data is generated using random watermark generator. Gather clean images for generator and put them into `dataset/` folder. Then run [notebook with synthetic dataset generation](https://github.com/boomb0om/watermark-detection/blob/main/jupyters/generate_dataset.ipynb). Generator will randomly put watermark on every image and save it into another folder.
+
+After synthetic images are generated, run [notebook](https://github.com/boomb0om/watermark-detection/blob/main/dataset/create_train_csv.ipynb) to create csv for all training images.
+
+### Training a model
+
+You can find traning code [in this notebook](https://github.com/boomb0om/watermark-detection/blob/main/jupyters/train.ipynb). Good luck!
