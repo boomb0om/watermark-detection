@@ -4,7 +4,7 @@
 - [Basic usage](#basic-usage)
 - [Test dataset](#test-dataset)
 - [Training a model and train dataset](#training-and-train-dataset)
-  - [training dataset](#training-dataset)
+  - [Training dataset](#training-dataset)
   - [Training a model](#training-a-model)
 
 ## Installation
