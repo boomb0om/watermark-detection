@@ -6,3 +6,4 @@ matplotlib
 tqdm
 huggingface-hub
 opencv-python
+timm>=0.6.12
