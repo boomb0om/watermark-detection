@@ -9,8 +9,9 @@
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-from timm.models.layers import trunc_normal_, DropPath
-from timm.models.registry import register_model
+from timm.layers.weight_init import trunc_normal_
+from timm.layers.drop import DropPath
+from timm.models import register_model
 
 
 class Block(nn.Module):
@@ -106,7 +107,8 @@ class ConvNeXt(nn.Module):
     def _init_weights(self, m):
         if isinstance(m, (nn.Conv2d, nn.Linear)):
             trunc_normal_(m.weight, std=.02)
-            nn.init.constant_(m.bias, 0)
+            if m.bias is not None:
+                nn.init.constant_(m.bias, 0)
 
     def forward_features(self, x):
         for i in range(4):

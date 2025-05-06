@@ -2,7 +2,7 @@ import os
 import torch
 import torch.nn as nn
 from torchvision import models, transforms
-from huggingface_hub import hf_hub_url, hf_hub_download
+from huggingface_hub import hf_hub_download, scan_cache_dir
 
 from .convnext import ConvNeXt
 from wmdetection.utils import FP16Module
@@ -45,7 +45,7 @@ def get_resnext_model(name):
     return model_ft, detector_transforms
 
 
-def get_watermarks_detection_model(name, device='cuda:0', fp16=True, pretrained=True, cache_dir='/tmp/watermark-detection'):
+def get_watermarks_detection_model(name, device='cuda:0', fp16=True, pretrained=True, cache_dir=None):
     assert name in MODELS, f"Unknown model name: {name}"
     assert not (fp16 and name.startswith('convnext')), "Can`t use fp16 mode with convnext models"
     config = MODELS[name]
@@ -53,9 +53,13 @@ def get_watermarks_detection_model(name, device='cuda:0', fp16=True, pretrained=
     model_ft, detector_transforms = config['constructor'](name)
     
     if pretrained:
-        hf_hub_download(repo_id=config['repo_id'], filename=config['filename'], 
-                        cache_dir=cache_dir, force_filename=config['filename'])
-        weights = torch.load(os.path.join(cache_dir, config['filename']), device)
+        # Use huggingface_hub's caching mechanism
+        model_path = hf_hub_download(
+            repo_id=config['repo_id'],
+            filename=config['filename'],
+            cache_dir=cache_dir
+        )
+        weights = torch.load(model_path, map_location=device)
         model_ft.load_state_dict(weights)
     
     if fp16:
